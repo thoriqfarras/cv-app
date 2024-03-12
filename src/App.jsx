@@ -55,20 +55,36 @@ function App() {
     }
   }
 
-  function moveItemUp(id) {
-    const itemMoved = workExperiences.find((exp) => exp.id === id);
-    const index = workExperiences.indexOf(itemMoved);
-    setWorkExperiences([
-      ...workExperiences.toSpliced(index, 1).toSpliced(index - 1, 0, itemMoved),
-    ]);
+  function moveItemUp(e, dataTitle, data, itemId) {
+    e.preventDefault();
+    const itemMoved = data.find((d) => d.id === itemId);
+    const index = data.indexOf(itemMoved);
+    const newEntry = [
+      ...data.toSpliced(index, 1).toSpliced(index - 1, 0, itemMoved),
+    ];
+    if (dataTitle === 'experiences') {
+      setWorkExperiences(newEntry);
+    } else if (dataTitle === 'education') {
+      setEducation(newEntry);
+    } else if (dataTitle === 'skills') {
+      setSkills(newEntry);
+    }
   }
 
-  function moveItemDown(id) {
-    const itemMoved = workExperiences.find((exp) => exp.id === id);
-    const index = workExperiences.indexOf(itemMoved);
-    setWorkExperiences([
-      ...workExperiences.toSpliced(index, 1).toSpliced(index + 1, 0, itemMoved),
-    ]);
+  function moveItemDown(e, dataTitle, data, itemId) {
+    e.preventDefault();
+    const itemMoved = data.find((d) => d.id === itemId);
+    const index = data.indexOf(itemMoved);
+    const newEntry = data
+      .toSpliced(index, 1)
+      .toSpliced(index + 1, 0, itemMoved);
+    if (dataTitle === 'experiences') {
+      setWorkExperiences(newEntry);
+    } else if (dataTitle === 'education') {
+      setEducation(newEntry);
+    } else if (dataTitle === 'skills') {
+      setSkills(newEntry);
+    }
   }
 
   return (
@@ -134,14 +150,12 @@ function App() {
                     workExperiences.filter((e) => e.id !== exp.id)
                   );
                 }}
-                onMoveUp={(e) => {
-                  e.preventDefault();
-                  moveItemUp(exp.id);
-                }}
-                onMoveDown={(e) => {
-                  e.preventDefault();
-                  moveItemDown(exp.id);
-                }}
+                onMoveUp={(e) =>
+                  moveItemUp(e, 'experience', workExperiences, exp.id)
+                }
+                onMoveDown={(e) =>
+                  moveItemDown(e, 'experience', workExperiences, exp.id)
+                }
                 isOnTop={index === 0}
                 isOnBottom={index === workExperiences.length - 1}
               />
@@ -196,14 +210,10 @@ function App() {
                 onDelete={() => {
                   setEducation(education.filter((e) => ed.id !== e.id));
                 }}
-                onMoveUp={(e) => {
-                  e.preventDefault();
-                  moveItemUp(ed.id);
-                }}
-                onMoveDown={(e) => {
-                  e.preventDefault();
-                  moveItemDown(ed.id);
-                }}
+                onMoveUp={(e) => moveItemUp(e, 'education', education, ed.id)}
+                onMoveDown={(e) =>
+                  moveItemDown(e, 'education', education, ed.id)
+                }
                 isOnTop={index === 0}
                 isOnBottom={index === education.length - 1}
               />
@@ -253,14 +263,8 @@ function App() {
                 onDelete={() =>
                   setSkills(skills.filter((s) => skill.id !== s.id))
                 }
-                onMoveUp={(e) => {
-                  e.preventDefault();
-                  moveItemUp(skill.id);
-                }}
-                onMoveDown={(e) => {
-                  e.preventDefault();
-                  moveItemDown(skill.id);
-                }}
+                onMoveUp={(e) => moveItemUp(e, 'skills', skills, skill.id)}
+                onMoveDown={(e) => moveItemDown(e, 'skills', skills, skill.id)}
                 isOnTop={index === 0}
                 isOnBottom={index === skills.length - 1}
               />
