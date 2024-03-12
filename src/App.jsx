@@ -42,28 +42,21 @@ function App() {
     setPersonalInfo(newEntry);
   }
 
-  function handleWorkExperienceFormChange(e, id) {
-    const newEntry = [...workExperiences];
-    newEntry.find((exp) => exp.id === id)[e.target.name] = e.target.value;
-    setWorkExperiences(newEntry);
-  }
-
-  function handleEducationFormChange(e, id) {
-    const newEntry = [...education];
-    newEntry.find((ed) => ed.id === id)[e.target.name] = e.target.value;
-    setEducation(newEntry);
-  }
-
-  function handleSkillFormChange(e, id) {
-    const newEntry = [...skills];
-    newEntry.find((skill) => skill.id === id)[e.target.name] = e.target.value;
-    setEducation(newEntry);
+  function handleSubFormChange(e, dataTitle, data, itemId) {
+    const newEntry = [...data];
+    newEntry.find((data) => data.id === itemId)[e.target.name] = e.target.value;
+    if (dataTitle === 'experiences') {
+      setWorkExperiences(newEntry);
+    } else if (dataTitle === 'education') {
+      setEducation(newEntry);
+    } else if (dataTitle === 'skills') {
+      setSkills(newEntry);
+    }
   }
 
   function moveItemUp(id) {
     const itemMoved = workExperiences.find((exp) => exp.id === id);
     const index = workExperiences.indexOf(itemMoved);
-    // console.log([...workExperiences.toSpliced(index - 1, 0, itemMoved)]);
     setWorkExperiences([
       ...workExperiences.toSpliced(index, 1).toSpliced(index - 1, 0, itemMoved),
     ]);
@@ -72,13 +65,10 @@ function App() {
   function moveItemDown(id) {
     const itemMoved = workExperiences.find((exp) => exp.id === id);
     const index = workExperiences.indexOf(itemMoved);
-    // console.log([...workExperiences.toSpliced(index - 1, 0, itemMoved)]);
     setWorkExperiences([
       ...workExperiences.toSpliced(index, 1).toSpliced(index + 1, 0, itemMoved),
     ]);
   }
-
-  console.log(education);
 
   return (
     <div className="bg-red-300 h-screen">
@@ -93,10 +83,6 @@ function App() {
           <PersonalInfoForm
             personalInfo={personalInfo}
             onEdit={handlePersonalInfoFormChange}
-            onCancel={() => {
-              setPersonalInfo({});
-              handleDropdownClick(0);
-            }}
           />
         </Dropdown>
         <Dropdown
@@ -113,7 +99,9 @@ function App() {
             >
               <WorkExperienceForm
                 data={exp}
-                onEdit={(e) => handleWorkExperienceFormChange(e, exp.id)}
+                onEdit={(e) =>
+                  handleSubFormChange(e, 'experiences', workExperiences, exp.id)
+                }
                 onDelete={() => {
                   setWorkExperiences(
                     workExperiences.filter((e) => e.id !== exp.id)
@@ -158,7 +146,9 @@ function App() {
             >
               <EducationForm
                 data={ed}
-                onEdit={(e) => handleEducationFormChange(e, ed.id)}
+                onEdit={(e) =>
+                  handleSubFormChange(e, 'education', education, ed.id)
+                }
                 onDelete={() => {
                   setEducation(education.filter((e) => ed.id !== e.id));
                 }}
@@ -201,7 +191,9 @@ function App() {
             >
               <SkillForm
                 data={skill}
-                onEdit={(e) => handleSkillFormChange(e, skill.id)}
+                onEdit={(e) =>
+                  handleSubFormChange(e, 'skills', skills, skill.id)
+                }
                 onDelete={() =>
                   setSkills(skills.filter((s) => skill.id !== s.id))
                 }
