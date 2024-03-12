@@ -4,20 +4,19 @@ import PersonalInfoForm from './components/PersonalInfoForm';
 import WorkExperienceForm from './components/WorkExperienceForm';
 import EducationForm from './components/EducationForm';
 import SkillForm from './components/SkillForm';
-import { personalInfo as _personalInfo } from './utils/personalInfoData';
-import { experiences } from './utils/experienceData';
-import { education as educationalExperiences } from './utils/educationData';
-import { skills as skillsData } from './utils/skillData';
+import { cvData } from './utils/cvData';
 import { v4 as uuid } from 'uuid';
 import { isEmpty } from 'lodash';
 
 function App() {
   const [activeDropdown, setActiveDropdown] = useState(-1);
   const [activeSubDropdown, setActiveSubDropdown] = useState(-1);
-  const [personalInfo, setPersonalInfo] = useState({});
-  const [education, setEducation] = useState(educationalExperiences);
-  const [workExperiences, setWorkExperiences] = useState(experiences);
-  const [skills, setSkills] = useState(skillsData);
+  const [personalInfo, setPersonalInfo] = useState(cvData.personalInfo);
+  const [education, setEducation] = useState(cvData.education);
+  const [workExperiences, setWorkExperiences] = useState(
+    cvData.workExperiences
+  );
+  const [skills, setSkills] = useState(cvData.skills);
 
   function handleDropdownClick(index) {
     if (activeDropdown === index) {
