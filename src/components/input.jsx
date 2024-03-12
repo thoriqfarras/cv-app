@@ -1,14 +1,37 @@
 import { useState } from 'react';
 
-function Input({ label, id, type, name, className, onChange }) {
+function TextInput({
+  label,
+  id,
+  inputValue,
+  name,
+  wrapperClass,
+  labelClass,
+  inputClass,
+  onChange,
+  overwriteClasses = false,
+}) {
   const [value, setValue] = useState('');
 
   return (
-    <div className={`flex flex-col ${className}`}>
-      <label htmlFor={id}>{label}</label>
-      <input type={type} id={id} name={name} onChange={onChange} />
+    <div
+      className={
+        overwriteClasses ? wrapperClass : `flex flex-col ${wrapperClass}`
+      }
+    >
+      <label htmlFor={id} className={labelClass}>
+        {label}
+      </label>
+      <input
+        type="text"
+        id={id}
+        name={name}
+        onChange={onChange}
+        className={inputClass}
+        value={inputValue}
+      />
     </div>
   );
 }
 
-export default Input;
+export default TextInput;

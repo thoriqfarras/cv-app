@@ -1,36 +1,39 @@
-import { useState } from 'react';
+import React from 'react';
+import { Chevron } from './icons';
 
-function Dropdown({ title, children, onShow, isActive = false }) {
+function Dropdown({
+  title,
+  wrapperClass,
+  headerClass,
+  childClass,
+  children,
+  onShow,
+  isActive = false,
+  overwriteClasses = false,
+  overwriteHeader = false,
+}) {
+  const childElements = React.Children.toArray(children);
+
   return (
-    <div className="border-2 border-black">
+    <div className={wrapperClass}>
       <button
-        className="flex justify-between items-center w-full py-4 px-2"
+        className={`${
+          !overwriteClasses
+            ? 'flex justify-between items-center w-full py-4 px-2'
+            : ''
+        } ${!isActive ? 'rounded-xl' : 'rounded-t-xl'} ${headerClass}`}
         onClick={onShow}
       >
-        <p>{title}</p>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="1em"
-          height="1em"
-          viewBox="0 0 24 24"
-          className={`transition-all ${isActive ? '-rotate-90' : ''}`}
-        >
-          <path
-            fill="none"
-            stroke="currentColor"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="m15 6l-6 6l6 6"
-          ></path>
-        </svg>
+        {overwriteHeader ? childElements[0] : <p>{title}</p>}
+        <Chevron className={`transition-all ${isActive ? '-rotate-90' : ''}`} />
       </button>
+
       <div
-        className={`flex flex-col p-2 border-2 gap-2 border-zinc-500 overflow-hidden transition-all ${
-          !isActive ? 'hidden' : ''
-        }`}
+        className={`${
+          !overwriteClasses ? 'flex flex-col p-4' : ''
+        } ${childClass} ${!isActive ? 'hidden' : ''}`}
       >
-        {children}
+        {overwriteHeader ? childElements.slice(1) : childElements}
       </div>
     </div>
   );

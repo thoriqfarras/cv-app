@@ -4,9 +4,11 @@ import PersonalInfoForm from './components/PersonalInfoForm';
 import WorkExperienceForm from './components/WorkExperienceForm';
 import EducationForm from './components/EducationForm';
 import SkillForm from './components/SkillForm';
+import { PlusSign } from './components/icons';
 import { cvData } from './utils/cvData';
 import { v4 as uuid } from 'uuid';
 import { isEmpty } from 'lodash';
+import { Chevron } from './components/icons';
 
 function App() {
   const [activeDropdown, setActiveDropdown] = useState(-1);
@@ -70,10 +72,12 @@ function App() {
   }
 
   return (
-    <div className="bg-red-300 h-screen">
-      <section>
+    <div className="bg-gray-800 h-screen flex flex-col md:flex-row [&>*]:flex-1 [&>*]:my-auto gap-8 p-16">
+      <section className="[&>*]:mb-4 text-zinc-100">
         <Dropdown
           title="Personal Info"
+          headerClass="font-bold shadow-[0_0_10px_2px_rgba(0,0,0,0.3)] bg-gray-800"
+          childClass="bg-gray-900 rounded-b-xl shadow-[0_3px_10px_2px_rgba(0,0,0,0.3)]"
           onShow={() => {
             handleDropdownClick(0);
           }}
@@ -83,9 +87,18 @@ function App() {
             personalInfo={personalInfo}
             onEdit={handlePersonalInfoFormChange}
           />
+          {/* <TextInput
+            id="full-name"
+            name="fullName"
+            label="Full Name"
+            inputValue={cvData.personalInfo.fullName}
+            onChange={handlePersonalInfoFormChange}
+          /> */}
         </Dropdown>
         <Dropdown
           title="Work Experience"
+          headerClass="font-bold shadow-[0_0_10px_2px_rgba(0,0,0,0.3)] bg-gray-800"
+          childClass="bg-gray-900 rounded-b-xl shadow-[0_3px_10px_2px_rgba(0,0,0,0.3)]"
           onShow={() => handleDropdownClick(1)}
           isActive={activeDropdown === 1}
         >
@@ -93,9 +106,24 @@ function App() {
             <Dropdown
               key={exp.id}
               title={exp.company}
+              wrapperClass="mb-2"
+              overwriteHeader={true}
+              headerClass="border-2 border-gray-800"
+              childClass="bg-gray-800 rounded-b-xl"
               onShow={() => handleSubDropdownClick(exp.id)}
               isActive={activeSubDropdown === exp.id}
             >
+              <div className="flex flex-col lg:flex-row gap-2 text-left">
+                <span className="font-bold">{exp.company}</span>
+                {exp.role && <span className="opacity-60">{exp.role}</span>}
+                {(exp.startDate || exp.endDate) && (
+                  <span className="italic opacity-40">
+                    {exp.startDate && exp.endDate
+                      ? `${exp.startDate} - ${exp.endDate}`
+                      : exp.startDate || exp.endDate}
+                  </span>
+                )}
+              </div>
               <WorkExperienceForm
                 data={exp}
                 onEdit={(e) =>
@@ -120,7 +148,7 @@ function App() {
             </Dropdown>
           ))}
           <button
-            className="border-2 border-zinc-650"
+            className="px-12 py-2 mx-auto bg-blue-600 rounded-md w-fit mt-4"
             onClick={() =>
               setWorkExperiences([
                 ...workExperiences,
@@ -128,11 +156,13 @@ function App() {
               ])
             }
           >
-            Add
+            <PlusSign />
           </button>
         </Dropdown>
         <Dropdown
           title="Education"
+          headerClass="font-bold shadow-[0_0_10px_2px_rgba(0,0,0,0.3)] bg-gray-800"
+          childClass="bg-gray-900 rounded-b-xl shadow-[0_3px_10px_2px_rgba(0,0,0,0.3)]"
           onShow={() => handleDropdownClick(2)}
           isActive={activeDropdown === 2}
         >
@@ -140,9 +170,24 @@ function App() {
             <Dropdown
               key={ed.id}
               title={ed.certification}
+              wrapperClass="mb-2"
+              overwriteHeader={true}
+              headerClass="border-2 border-gray-800"
+              childClass="bg-gray-800 rounded-b-xl"
               onShow={() => handleSubDropdownClick(ed.id)}
               isActive={activeSubDropdown === ed.id}
             >
+              <div className="flex flex-col lg:flex-row gap-2 text-left">
+                <span className="font-bold">{ed.certification}</span>
+                {ed.school && <span className="opacity-60">{ed.school}</span>}
+                {(ed.startDate || ed.endDate) && (
+                  <span className="italic opacity-40">
+                    {ed.startDate && ed.endDate
+                      ? `${ed.startDate} - ${ed.endDate}`
+                      : ed.startDate || ed.endDate}
+                  </span>
+                )}
+              </div>
               <EducationForm
                 data={ed}
                 onEdit={(e) =>
@@ -165,7 +210,7 @@ function App() {
             </Dropdown>
           ))}
           <button
-            className="border-2 border-zinc-650"
+            className="px-12 py-2 mx-auto bg-blue-600 rounded-md w-fit mt-4"
             onClick={() =>
               setEducation([
                 ...education,
@@ -173,11 +218,13 @@ function App() {
               ])
             }
           >
-            Add
+            <PlusSign></PlusSign>
           </button>
         </Dropdown>
         <Dropdown
           title="Skills"
+          headerClass="font-bold shadow-[0_0_10px_2px_rgba(0,0,0,0.3)] bg-gray-800"
+          childClass="bg-gray-900 rounded-b-xl shadow-[0_3px_10px_2px_rgba(0,0,0,0.3)]"
           onShow={() => handleDropdownClick(3)}
           isActive={activeDropdown === 3}
         >
@@ -185,9 +232,19 @@ function App() {
             <Dropdown
               key={skill.id}
               title={skill.skill}
+              wrapperClass="mb-2"
+              overwriteHeader={true}
+              headerClass="border-2 border-gray-800"
+              childClass="bg-gray-800 rounded-b-xl"
               onShow={() => handleSubDropdownClick(skill.id)}
               isActive={activeSubDropdown === skill.id}
             >
+              <div className="flex flex-col lg:flex-row gap-2 text-left">
+                <span className="font-bold">{skill.skill}</span>
+                {skill.level && (
+                  <span className="opacity-60">{skill.level}</span>
+                )}
+              </div>
               <SkillForm
                 data={skill}
                 onEdit={(e) =>
@@ -210,12 +267,12 @@ function App() {
             </Dropdown>
           ))}
           <button
-            className="border-2 border-zinc-650"
+            className="px-12 py-2 mx-auto bg-blue-600 rounded-md w-fit mt-4"
             onClick={() =>
               setSkills([...skills, { id: uuid(), skill: 'New Skill' }])
             }
           >
-            Add
+            <PlusSign />
           </button>
         </Dropdown>
       </section>

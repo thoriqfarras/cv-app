@@ -11,6 +11,7 @@ function PersonalInfoForm(props) {
           name="fullName"
           onChange={props.onEdit}
           value={props.personalInfo.fullName}
+          className="text-zinc-800 rounded-sm p-1"
         />
       </div>
       <div className="flex flex-col gap-1">
@@ -21,6 +22,7 @@ function PersonalInfoForm(props) {
           name="email"
           onChange={props.onEdit}
           value={props.personalInfo.email}
+          className="text-zinc-800 rounded-sm p-1"
         />
       </div>
       <div className="flex flex-col gap-1">
@@ -31,6 +33,7 @@ function PersonalInfoForm(props) {
           name="phone"
           onChange={props.onEdit}
           value={props.personalInfo.phone}
+          className="text-zinc-800 rounded-sm p-1"
         />
       </div>
       <div className="flex flex-col gap-1">
@@ -41,6 +44,7 @@ function PersonalInfoForm(props) {
           name="location"
           onChange={props.onEdit}
           value={props.personalInfo.location}
+          className="text-zinc-800 rounded-sm p-1"
         />
       </div>
     </form>

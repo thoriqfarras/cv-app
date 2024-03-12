@@ -1,6 +1,8 @@
+import { Chevron, TrashCan } from './icons';
+
 function SkillForm(props) {
   return (
-    <form className="flex flex-col gap-2">
+    <form className="flex flex-col gap-2 [&>*>input]:text-zinc-800 [&>*>input]:rounded-sm [&>*>input]:p-1">
       <div className="flex flex-col gap-1">
         <label htmlFor="skill">Skill</label>
         <input
@@ -31,13 +33,23 @@ function SkillForm(props) {
           onChange={props.onEdit}
         />
       </div>
-      <div className="flex [&>*]:flex-1">
-        <button onClick={props.onDelete}>Delete</button>
-        <button onClick={props.onMoveUp} disabled={props.isOnTop}>
-          Move up
+      <div className="flex [&>*]:flex-1 [&>*]:py-2 gap-2">
+        <button
+          className="bg-blue-600 rounded-md disabled:opacity-50"
+          onClick={props.onMoveUp}
+          disabled={props.isOnTop}
+        >
+          <Chevron className={'rotate-90 mx-auto'} />
         </button>
-        <button onClick={props.onMoveDown} disabled={props.isOnBottom}>
-          Move down
+        <button className="bg-red-600 rounded-md" onClick={props.onDelete}>
+          <TrashCan className="mx-auto" />
+        </button>
+        <button
+          className="bg-blue-600 rounded-md disabled:opacity-50"
+          onClick={props.onMoveDown}
+          disabled={props.isOnBottom}
+        >
+          <Chevron className="-rotate-90 mx-auto" />
         </button>
       </div>
     </form>
