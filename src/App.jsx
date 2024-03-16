@@ -4,6 +4,8 @@ import PersonalInfoForm from './components/PersonalInfoForm';
 import WorkExperienceForm from './components/WorkExperienceForm';
 import EducationForm from './components/EducationForm';
 import SkillForm from './components/SkillForm';
+import Preview from './components/Preview';
+import Header from './components/Header';
 import { PlusSign } from './components/icons';
 import { cvData } from './utils/cvData';
 import { v4 as uuid } from 'uuid';
@@ -88,8 +90,9 @@ function App() {
   }
 
   return (
-    <div className="bg-gray-800 h-screen flex flex-col md:flex-row [&>*]:flex-1 [&>*]:my-auto gap-8 p-16">
-      <section className="[&>*]:mb-4 text-zinc-100">
+    <div className="bg-gray-800 h-full flex flex-col md:flex-row [&>*]:flex-1 [&>*]:my-auto relative scroll-smooth">
+      <section className="[&>*]:mb-4 text-zinc-100 h-full md:h-screen md:overflow-y-scroll p-8 md:p-16">
+        <Header></Header>
         <Dropdown
           title="Personal Info"
           headerClass="font-bold shadow-[0_0_10px_2px_rgba(0,0,0,0.3)] bg-gray-800"
@@ -103,13 +106,6 @@ function App() {
             personalInfo={personalInfo}
             onEdit={handlePersonalInfoFormChange}
           />
-          {/* <TextInput
-            id="full-name"
-            name="fullName"
-            label="Full Name"
-            inputValue={cvData.personalInfo.fullName}
-            onChange={handlePersonalInfoFormChange}
-          /> */}
         </Dropdown>
         <Dropdown
           title="Work Experience"
@@ -151,10 +147,10 @@ function App() {
                   );
                 }}
                 onMoveUp={(e) =>
-                  moveItemUp(e, 'experience', workExperiences, exp.id)
+                  moveItemUp(e, 'experiences', workExperiences, exp.id)
                 }
                 onMoveDown={(e) =>
-                  moveItemDown(e, 'experience', workExperiences, exp.id)
+                  moveItemDown(e, 'experiences', workExperiences, exp.id)
                 }
                 isOnTop={index === 0}
                 isOnBottom={index === workExperiences.length - 1}
@@ -280,30 +276,13 @@ function App() {
           </button>
         </Dropdown>
       </section>
-      <section>
-        <h1 className="text-2xl font-bold">Personal Info</h1>
-
-        <p>{personalInfo.fullName}</p>
-        <p>{personalInfo.email}</p>
-        <p>{personalInfo.phone}</p>
-        <p>{personalInfo.location}</p>
-
-        {!isEmpty(workExperiences) && (
-          <>
-            <h1 className="text-2xl font-bold">Work Experience</h1>
-            {workExperiences.map((exp) => (
-              <Fragment key={exp.id}>
-                <p>{exp.company}</p>
-                <p>{exp.role}</p>
-                <p>{exp.startDate}</p>
-                <p>{exp.endDate}</p>
-                <p>{exp.location}</p>
-                <p>{exp.description}</p>
-                <hr />
-              </Fragment>
-            ))}
-          </>
-        )}
+      <section className="h-full md:h-screen overflow-scroll p-16">
+        <Preview
+          personalInfo={personalInfo}
+          workExperiences={workExperiences}
+          education={education}
+          skills={skills}
+        />
       </section>
     </div>
   );
