@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 function PersonalInfoForm(props) {
   return (
     <form className="flex flex-col gap-2">

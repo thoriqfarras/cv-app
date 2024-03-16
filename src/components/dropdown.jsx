@@ -1,5 +1,5 @@
 import React from 'react';
-import { Chevron } from './icons';
+import { Chevron } from './Icons';
 
 function Dropdown({
   title,

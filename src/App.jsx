@@ -1,17 +1,15 @@
 import { useState, useRef } from 'react';
-import Dropdown from './components/dropdown';
+import Dropdown from './components/Dropdown';
 import PersonalInfoForm from './components/PersonalInfoForm';
 import WorkExperienceForm from './components/WorkExperienceForm';
 import EducationForm from './components/EducationForm';
 import SkillForm from './components/SkillForm';
 import Preview from './components/Preview';
 import Header from './components/Header';
-import { PlusSign } from './components/icons';
+import { PlusSign } from './components/Icons';
 import { cvData } from './utils/cvData';
 import { v4 as uuid } from 'uuid';
 import { useReactToPrint } from 'react-to-print';
-import { isEmpty } from 'lodash';
-import { Chevron } from './components/icons';
 
 function App() {
   const [activeDropdown, setActiveDropdown] = useState(-1);

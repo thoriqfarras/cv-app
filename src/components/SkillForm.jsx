@@ -1,4 +1,4 @@
-import { Chevron, TrashCan } from './icons';
+import { Chevron, TrashCan } from './Icons';
 
 function SkillForm(props) {
   return (
