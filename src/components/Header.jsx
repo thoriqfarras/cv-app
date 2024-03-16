@@ -3,7 +3,7 @@ import { Reset, Print, Github } from './Icons';
 function Header(props) {
   return (
     <div className="flex flex-col items-center">
-      <img src="/public/vite.svg" alt="vite logo" className="h-20" />
+      <img src="vite.svg" alt="vite logo" className="h-20" />
       <h1 className="font-bold text-4xl">CVite</h1>
       <p className="text-zinc-400">A simple CV builder.</p>
       <div className="flex justify-center gap-4 my-4">
