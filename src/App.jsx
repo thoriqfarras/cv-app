@@ -1,4 +1,4 @@
-import { useState, Fragment } from 'react';
+import { useState, useRef } from 'react';
 import Dropdown from './components/dropdown';
 import PersonalInfoForm from './components/PersonalInfoForm';
 import WorkExperienceForm from './components/WorkExperienceForm';
@@ -9,6 +9,7 @@ import Header from './components/Header';
 import { PlusSign } from './components/icons';
 import { cvData } from './utils/cvData';
 import { v4 as uuid } from 'uuid';
+import { useReactToPrint } from 'react-to-print';
 import { isEmpty } from 'lodash';
 import { Chevron } from './components/icons';
 
@@ -21,6 +22,9 @@ function App() {
     cvData.workExperiences
   );
   const [skills, setSkills] = useState(cvData.skills);
+
+  const previewRef = useRef();
+  const handlePrint = useReactToPrint({ content: () => previewRef.current });
 
   function handleDropdownClick(index) {
     if (activeDropdown === index) {
@@ -73,6 +77,20 @@ function App() {
     }
   }
 
+  function resetData() {
+    setPersonalInfo({ fullName: '', email: '', phone: '', location: '' });
+    setWorkExperiences([]);
+    setEducation([]);
+    setSkills([]);
+  }
+
+  function useSampleData() {
+    setPersonalInfo(cvData.personalInfo);
+    setWorkExperiences(cvData.workExperiences);
+    setEducation(cvData.education);
+    setSkills(cvData.skills);
+  }
+
   function moveItemDown(e, dataTitle, data, itemId) {
     e.preventDefault();
     const itemMoved = data.find((d) => d.id === itemId);
@@ -92,7 +110,11 @@ function App() {
   return (
     <div className="bg-gray-800 h-full flex flex-col md:flex-row [&>*]:flex-1 [&>*]:my-auto relative scroll-smooth">
       <section className="[&>*]:mb-4 text-zinc-100 h-full md:h-screen md:overflow-y-scroll p-8 md:p-16">
-        <Header></Header>
+        <Header
+          resetData={resetData}
+          useSampleData={useSampleData}
+          printCV={handlePrint}
+        />
         <Dropdown
           title="Personal Info"
           headerClass="font-bold shadow-[0_0_10px_2px_rgba(0,0,0,0.3)] bg-gray-800"
@@ -282,6 +304,7 @@ function App() {
           workExperiences={workExperiences}
           education={education}
           skills={skills}
+          ref={previewRef}
         />
       </section>
     </div>

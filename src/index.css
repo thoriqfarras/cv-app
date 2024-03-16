@@ -15,3 +15,16 @@
     overflow: hidden;
   }
 }
+
+@media print {
+  /* Your print styles here */
+  body {
+    margin: 0; /* Remove default margins */
+  }
+
+  .cv-container {
+    /* Adjust width, height, or both to fit A4 */
+    width: 100%; /* Ensure width spans the entire page */
+    height: fit-content; /* Dynamically adjust height */
+  }
+}

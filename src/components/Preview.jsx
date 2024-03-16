@@ -1,9 +1,11 @@
-import { useState, Fragment } from 'react';
+import { forwardRef } from 'react';
 
-function Preview(props) {
-  console.log(props);
+const Preview = forwardRef(function Preview(props, ref) {
   return (
-    <div className="bg-zinc-100 aspect-[1/1.414] h-[48rem] p-12">
+    <div
+      className="cv-container bg-zinc-100 aspect-[1/1.414] h-[48rem] p-12"
+      ref={ref}
+    >
       <h1 className="text-lg font-bold">{props.personalInfo.fullName}</h1>
       <p className="text-sm">{props.personalInfo.email}</p>
       <p className="text-sm">{props.personalInfo.phone}</p>
@@ -62,6 +64,6 @@ function Preview(props) {
       </div>
     </div>
   );
-}
+});
 
 export default Preview;
